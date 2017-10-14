@@ -50,6 +50,19 @@ public class GameManager : MonoBehaviour
 			}
 		}
 	}
+
+	// CLASS FUNCTIONS
+	public void swapPredatorPrey()
+	{
+		if (predatorIndex == 0)
+		{
+			predatorIndex = 1;
+		}
+		else
+		{
+			predatorIndex = 0;
+		}
+	}
 		
 	// UNITY FUNCTIONS
 	void Awake()

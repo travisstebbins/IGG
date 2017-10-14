@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 		{
 			m_isPredator = value;
 			speed = m_isPredator ? GameManager.instance.predatorSpeed : GameManager.instance.preySpeed;
+			GetComponent<SpriteRenderer> ().color = m_isPredator ? Color.red : Color.green;
 		}
 	}
 
@@ -40,9 +41,9 @@ public class Player : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D coll)
 	{
-		if (coll.gameObject.GetComponent<Player>() != null)
+		if (isPredator && coll.gameObject.GetComponent<Player>() != null)
 		{
-			Debug.Log ("ran into player " + coll.gameObject.GetComponent<Player> ().playerIndex);
+			Debug.Log ("predator (player " + playerIndex + ") got prey");
 		}
 	}
 }

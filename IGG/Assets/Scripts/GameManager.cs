@@ -22,6 +22,7 @@ public class GameManager : NetworkBehaviour
 
 	// SERIALIZE FIELD VARIABLES
 	[SerializeField] GameObject collectablePrefab;
+	[SerializeField] List<GameObject> modules;
 
 	// CLASS VARIABLES
 	int m_predatorIndex;
@@ -68,6 +69,12 @@ public class GameManager : NetworkBehaviour
 
 		
 	// UNITY FUNCTIONS
+	public override void OnStartServer()
+	{
+		GameObject mod = Instantiate (modules [0]);
+		NetworkServer.Spawn (mod);
+	}
+
 	void Awake()
 	{
 		if (instance != this)

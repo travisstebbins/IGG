@@ -32,6 +32,7 @@ public class PlayerController : NetworkBehaviour
 	public override void OnStartLocalPlayer()
 	{
 		GetComponent<SpriteRenderer> ().color = Color.blue;
+		//camera = GameObject.FindGameObjectWithTag ("MainCamera");
 	}
 
 	void Update()
@@ -41,6 +42,7 @@ public class PlayerController : NetworkBehaviour
 			return;
 		}
 		transform.Translate (new Vector3 (Input.GetAxis ("Horizontal") * Time.deltaTime * speed, Input.GetAxis ("Vertical") * Time.deltaTime * speed, 0));
+		Camera.main.transform.position = transform.position - Vector3.forward;
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)

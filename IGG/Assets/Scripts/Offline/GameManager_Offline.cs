@@ -39,6 +39,7 @@ public class GameManager_Offline : MonoBehaviour
 	PlayerController_Offline player1;
 	PlayerController_Offline player2;
 	int m_predatorIndex;
+	Collectable_Offline collectable;
 	float timeRemaining;
 
 	public int predatorIndex
@@ -119,12 +120,12 @@ public class GameManager_Offline : MonoBehaviour
 	{
 		float x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
 		float y = UnityEngine.Random.Range (0, numRows * moduleHeight);
-		GameObject go = Instantiate(collectablePrefab, new Vector3(x, y, 0), Quaternion.identity);
-		while (Physics2D.BoxCastAll (go.transform.position, go.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length > 1)
+		collectable = Instantiate(collectablePrefab, new Vector3(x, y, 0), Quaternion.identity).GetComponent<Collectable_Offline>();
+		while (Physics2D.BoxCastAll (collectable.transform.position, collectable.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length > 1)
 		{
 			x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
 			y = UnityEngine.Random.Range (0, numRows * moduleHeight);
-			go.transform.position = new Vector2 (x, y);
+			collectable.transform.position = new Vector2 (x, y);
 		}
 	}
 
@@ -162,6 +163,11 @@ public class GameManager_Offline : MonoBehaviour
 	public float playerDistance()
 	{
 		return Vector3.Distance (player1.transform.position, player2.transform.position);
+	}
+
+	public float collectableDistance(Vector3 point)
+	{
+		return Vector3.Distance (point, collectable.transform.position);
 	}
 		
 	// UNITY FUNCTIONS

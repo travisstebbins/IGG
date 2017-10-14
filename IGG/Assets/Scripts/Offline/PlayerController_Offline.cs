@@ -53,6 +53,8 @@ public class PlayerController_Offline : MonoBehaviour
 		l.transform.localPosition = new Vector3 (0, 0, Mathf.Lerp (minZ, maxZ, t));
 		l.range = Mathf.Lerp (minR, maxR, t);
 		l.intensity = Mathf.Lerp (minI, maxI, t);
+		t = Mathf.Clamp01 (slope * GameManager_Offline.instance.collectableDistance (transform.position) + intercept);
+		l.color = Color.Lerp (new Color(0.7f, 0.7f, 1), Color.yellow, t);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)

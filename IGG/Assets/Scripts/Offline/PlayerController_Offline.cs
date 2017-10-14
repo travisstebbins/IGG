@@ -7,7 +7,7 @@ public class PlayerController_Offline : MonoBehaviour
 {
 	// CLASS VARIABLES
 	public int playerIndex;
-	float speed = 5;
+	float speed = 1000000;
 	bool m_isPredator;
 	readonly float minDistance = 5;
 	readonly float maxDistance = 40;
@@ -40,11 +40,11 @@ public class PlayerController_Offline : MonoBehaviour
 	{
 		if (playerIndex == 0)
 		{
-			transform.Translate (new Vector3 (Input.GetAxis ("Player1Horizontal") * Time.deltaTime * speed, Input.GetAxis ("Player1Vertical") * Time.deltaTime * speed, 0));
+			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player1Horizontal") * speed, Input.GetAxis ("Player1Vertical") * speed);
 		}
 		else
 		{
-			transform.Translate (new Vector3 (Input.GetAxis ("Player2Horizontal") * Time.deltaTime * speed, Input.GetAxis ("Player2Vertical") * Time.deltaTime * speed, 0));
+			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player2Horizontal") * speed, Input.GetAxis ("Player2Vertical") * speed);
 		}
 		Light l = GetComponentInChildren<Light> ();
 		float slope = 1f / (maxDistance - minDistance);

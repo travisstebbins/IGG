@@ -27,35 +27,49 @@ public class GameManager : NetworkBehaviour
 	[SerializeField] int columns;
 
 	// CLASS VARIABLES
-	int m_predatorIndex;
+	public readonly int playerLimit = 2;
 	public readonly float predatorSpeed = 5;
 	public readonly float preySpeed = 5;
+	List<PlayerController> players = new List<PlayerController>();
+	int m_predatorIndex;
 
-	// PROPERTIES
 	public int predatorIndex
 	{
 		get
 		{
 			return m_predatorIndex;
 		}
-		private set
+		set
 		{
 			m_predatorIndex = value;
-//			switch(m_predatorIndex)
-//			{
-//				case 0:
-//					player1.isPredator = true;
-//					player2.isPredator = false;
-//					break;
-//				case 1:
-//					player1.isPredator = false;
-//					player2.isPredator = true;
-//					break;
-//			}
+			for (int i = 0; i < players.Count; ++i)
+			{
+				if (i == m_predatorIndex)
+				{
+					players [i].isPredator = true;
+				}
+				else
+				{
+					players [i].isPredator = false;
+				}
+			}
 		}
 	}
 
 	// CLASS FUNCTIONS
+	public void initializePlayers()
+	{
+		players.Clear ();
+		foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
+		{
+			if (go.GetComponent<PlayerController>() != null)
+			{
+				players.Add (go.GetComponent<PlayerController> ());
+			}
+		}
+		predatorIndex = UnityEngine.Random.Range (0, players.Count);
+	}
+
 	public void swapPredatorPrey()
 	{
 		if (predatorIndex == 0)
@@ -75,10 +89,22 @@ public class GameManager : NetworkBehaviour
 		GameObject collectable = Instantiate(collectablePrefab, new Vector3(14 * i - 3.5f, 14 * j, 0), Quaternion.identity);
 		NetworkServer.Spawn (collectable);
 	}
+
+	public List<PlayerController> getPlayers()
+	{
+		return players;
+	}
+
+	void resetGameManager()
+	{
+		players.Clear ();
+	}
 		
 	// UNITY FUNCTIONS
 	public override void OnStartServer()
 	{
+		resetGameManager ();
+		Debug.Log ("#players: " + players.Count);
 		for (int i = 0; i < rows; ++i)
 		{
 			for (int j = 0; j < columns; ++j)
@@ -96,11 +122,6 @@ public class GameManager : NetworkBehaviour
 		{
 			Destroy (this.gameObject);
 		}
-	}
-
-	void Start()
-	{
-		predatorIndex = 0;
 	}
 
 	public void generateCollectable()

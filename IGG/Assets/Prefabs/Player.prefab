@@ -154,8 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8161bfd21086440fa017faa75926652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectablePrefab: {fileID: 1062157689733884, guid: 4e2d68875cbec420b8b1731398a6d2a4,
-    type: 2}
+  isPredator: 0
 --- !u!212 &212776721922459228
 SpriteRenderer:
   m_ObjectHideFlags: 1

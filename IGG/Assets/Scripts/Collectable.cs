@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 public enum CollectableType
 {
 	Reverser
 }
 
-public class Collectable : MonoBehaviour
+public class Collectable : NetworkBehaviour
 {
 	// PROPERTIES
 	public CollectableType type { get; private set;}
 
 	// CLASS FUNCTIONS
-	public void useCollectable(PlayerController whichPlayer)
+	[Command]
+	public void CmdUseCollectable(bool playerIsPredator)
 	{
 		Debug.Log ("useCollectable called");
 		if (type == CollectableType.Reverser)
 		{
-			if (!whichPlayer.isPredator)
+			if (!playerIsPredator)
 			{
 				GameManager.instance.swapPredatorPrey ();
 			}
 		}
 		GameManager.instance.spawnCollectable ();
-		Destroy (gameObject);
+		NetworkServer.Destroy (gameObject);
 	}
 
 	// UNITY FUNCTIONS
@@ -39,7 +41,7 @@ public class Collectable : MonoBehaviour
 	{
 		if (coll.gameObject.GetComponent<PlayerController>() != null)
 		{
-			useCollectable (coll.gameObject.GetComponent<PlayerController>());
+			CmdUseCollectable (coll.gameObject.GetComponent<PlayerController>().isPredator);
 		}
 	}
 }

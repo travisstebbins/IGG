@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
-
+public class Player : MonoBehaviour
+{
 	// CLASS VARIABLES
 	bool m_isPredator;
 	float speed;

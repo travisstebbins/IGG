@@ -24,6 +24,7 @@ public class Collectable : MonoBehaviour
 				GameManager.instance.swapPredatorPrey ();
 			}
 		}
+		GameManager.instance.spawnCollectable ();
 		Destroy (gameObject);
 	}
 

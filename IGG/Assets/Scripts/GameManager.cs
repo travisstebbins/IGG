@@ -79,9 +79,9 @@ public class GameManager : NetworkBehaviour
 	// UNITY FUNCTIONS
 	public override void OnStartServer()
 	{
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < rows; ++i)
 		{
-			for (int j = 0; j < 5; ++j)
+			for (int j = 0; j < columns; ++j)
 			{
 				GameObject module = Instantiate (modules [UnityEngine.Random.Range (0, modules.Count)], new Vector3(14 * i, 14 * j, 0), Quaternion.identity);
 				NetworkServer.Spawn (module);

@@ -120,7 +120,6 @@ public class GameManager_Offline : MonoBehaviour
 		float x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
 		float y = UnityEngine.Random.Range (0, numRows * moduleHeight);
 		GameObject go = Instantiate(collectablePrefab, new Vector3(x, y, 0), Quaternion.identity);
-		Debug.Log ("collectable boxcast hit " + Physics2D.BoxCastAll (go.transform.position, go.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length + " objects");
 		while (Physics2D.BoxCastAll (go.transform.position, go.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length > 1)
 		{
 			x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
@@ -131,13 +130,25 @@ public class GameManager_Offline : MonoBehaviour
 
 	public void spawnPlayers()
 	{
-		int i = UnityEngine.Random.Range (0, numRows);
-		int j = UnityEngine.Random.Range (0, numColumns);
-		player1 = GameObject.Instantiate (playerPrefab, new Vector3 (14 * j - 3.5f, 14 * i, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
+		float x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
+		float y = UnityEngine.Random.Range (0, numRows * moduleHeight);
+		player1 = GameObject.Instantiate (playerPrefab, new Vector3 (x, y, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
+		while (Physics2D.BoxCastAll (player1.transform.position, player1.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length > 1)
+		{
+			x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
+			y = UnityEngine.Random.Range (0, numRows * moduleHeight);
+			player1.transform.position = new Vector2 (x, y);
+		}
 		player1.playerIndex = 0;
-		i = UnityEngine.Random.Range (0, numRows);
-		j = UnityEngine.Random.Range (0, numColumns);
-		player2 = GameObject.Instantiate (playerPrefab, new Vector3 (14 * j - 3.5f, 14 * i, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
+		x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
+		y = UnityEngine.Random.Range (0, numRows * moduleHeight);
+		player2 = GameObject.Instantiate (playerPrefab, new Vector3 (x, y, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
+		while (Physics2D.BoxCastAll (player2.transform.position, player2.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length > 1)
+		{
+			x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
+			y = UnityEngine.Random.Range (0, numRows * moduleHeight);
+			player2.transform.position = new Vector2 (x, y);
+		}
 		player2.playerIndex = 1;
 		player2.GetComponentInChildren<Camera> ().rect = new Rect (0.5f, 0, 0.5f, 1);
 	}

@@ -25,9 +25,11 @@ public class GameManager_Offline : MonoBehaviour
 	[SerializeField] GameObject playerPrefab;
 	[SerializeField] GameObject collectablePrefab;
 	[SerializeField] List<GameObject> modules;
+	[SerializeField] float moduleWidth;
+	[SerializeField] float moduleHeight;
 	[SerializeField] bool rotateModules;
-	[SerializeField] int rows;
-	[SerializeField] int columns;
+	[SerializeField] int numRows;
+	[SerializeField] int numColumns;
 	[SerializeField] float timeLimit;
 
 	// CLASS VARIABLES
@@ -82,22 +84,22 @@ public class GameManager_Offline : MonoBehaviour
 
 	void generateMap()
 	{
-		for (int i = 0; i < rows; ++i)
+		for (int i = 0; i < numRows; ++i)
 		{
-			for (int j = 0; j < columns; ++j)
+			for (int j = 0; j < numColumns; ++j)
 			{
 				float rotation = 0;
 				if (rotateModules)
 				{
 					rotation = 90 * UnityEngine.Random.Range (0, 4);
 				}
-				Module_Offline module = Instantiate (modules [UnityEngine.Random.Range (0, modules.Count)], new Vector3(14 * j, 14 * i, 0), Quaternion.Euler(new Vector3(0, 0, rotation))).GetComponent<Module_Offline>();
+				Module_Offline module = Instantiate (modules [UnityEngine.Random.Range (0, modules.Count)], new Vector3(moduleWidth * j + moduleWidth / 2.0f, moduleHeight * i + moduleHeight / 2.0f, 0), Quaternion.Euler(new Vector3(0, 0, rotation))).GetComponent<Module_Offline>();
 				module.gates.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, -rotation));
 				if (i == 0)
 				{
 					module.bottomGateEnabled = true;
 				}
-				else if (i == rows - 1)
+				else if (i == numRows - 1)
 				{
 					module.topGateEnabled = true;
 				}
@@ -105,7 +107,7 @@ public class GameManager_Offline : MonoBehaviour
 				{
 					module.leftGateEnabled = true;
 				}
-				else if (j == columns - 1)
+				else if (j == numColumns - 1)
 				{
 					module.rightGateEnabled = true;
 				}
@@ -115,20 +117,27 @@ public class GameManager_Offline : MonoBehaviour
 
 	public void spawnCollectable()
 	{
-		int i = UnityEngine.Random.Range (0, rows);
-		int j = UnityEngine.Random.Range (0, columns);
-		Instantiate(collectablePrefab, new Vector3(14 * i - 3.5f, 14 * j, 0), Quaternion.identity);
+		float x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
+		float y = UnityEngine.Random.Range (0, numRows * moduleHeight);
+		GameObject go = Instantiate(collectablePrefab, new Vector3(x, y, 0), Quaternion.identity);
+		Debug.Log ("collectable boxcast hit " + Physics2D.BoxCastAll (go.transform.position, go.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length + " objects");
+		while (Physics2D.BoxCastAll (go.transform.position, go.GetComponent<BoxCollider2D> ().size, 0, Vector3.forward).Length > 1)
+		{
+			x = UnityEngine.Random.Range (0, numColumns * moduleWidth);
+			y = UnityEngine.Random.Range (0, numRows * moduleHeight);
+			go.transform.position = new Vector2 (x, y);
+		}
 	}
 
 	public void spawnPlayers()
 	{
-		int i = UnityEngine.Random.Range (0, rows);
-		int j = UnityEngine.Random.Range (0, columns);
-		player1 = GameObject.Instantiate (playerPrefab, new Vector3 (14 * i - 3.5f, 14 * j, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
+		int i = UnityEngine.Random.Range (0, numRows);
+		int j = UnityEngine.Random.Range (0, numColumns);
+		player1 = GameObject.Instantiate (playerPrefab, new Vector3 (14 * j - 3.5f, 14 * i, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
 		player1.playerIndex = 0;
-		i = UnityEngine.Random.Range (0, rows);
-		j = UnityEngine.Random.Range (0, columns);
-		player2 = GameObject.Instantiate (playerPrefab, new Vector3 (14 * i - 3.5f, 14 * j, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
+		i = UnityEngine.Random.Range (0, numRows);
+		j = UnityEngine.Random.Range (0, numColumns);
+		player2 = GameObject.Instantiate (playerPrefab, new Vector3 (14 * j - 3.5f, 14 * i, 0), Quaternion.identity).GetComponent<PlayerController_Offline> ();
 		player2.playerIndex = 1;
 		player2.GetComponentInChildren<Camera> ().rect = new Rect (0.5f, 0, 0.5f, 1);
 	}

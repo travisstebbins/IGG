@@ -67,6 +67,9 @@ MonoBehaviour:
   - {fileID: 1297659083413142, guid: c26bf7e3115e44f5fa20da36911cd421, type: 2}
   - {fileID: 1099759973969150, guid: c8ed365dbc6244c3fa6684f72838e079, type: 2}
   - {fileID: 1336723454158952, guid: e8d63a130f8674024ad6d58c5ee40599, type: 2}
+  moduleWidth: 14
+  moduleHeight: 14
+  rotateModules: 1
   rows: 5
   columns: 5
   timeLimit: 180

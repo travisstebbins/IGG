@@ -5,8 +5,6 @@ using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour
 {
-	// SERIALIZE FIELD VARIABLES
-	[SerializeField] GameObject collectablePrefab;
 
 	// CLASS VARIABLES
 	bool m_isPredator;

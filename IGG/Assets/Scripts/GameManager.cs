@@ -23,6 +23,8 @@ public class GameManager : NetworkBehaviour
 	// SERIALIZE FIELD VARIABLES
 	[SerializeField] GameObject collectablePrefab;
 	[SerializeField] List<GameObject> modules;
+	[SerializeField] int rows;
+	[SerializeField] int columns;
 
 	// CLASS VARIABLES
 	int m_predatorIndex;
@@ -66,7 +68,13 @@ public class GameManager : NetworkBehaviour
 		}
 	}
 
-
+	public void spawnCollectable()
+	{
+		int i = UnityEngine.Random.Range (0, rows);
+		int j = UnityEngine.Random.Range (0, columns);
+		GameObject collectable = Instantiate(collectablePrefab, new Vector3(14 * i - 3.5f, 14 * j, 0), Quaternion.identity);
+		NetworkServer.Spawn (collectable);
+	}
 		
 	// UNITY FUNCTIONS
 	public override void OnStartServer()
@@ -79,6 +87,7 @@ public class GameManager : NetworkBehaviour
 				NetworkServer.Spawn (module);
 			}
 		}
+		spawnCollectable ();
 	}
 
 	void Awake()

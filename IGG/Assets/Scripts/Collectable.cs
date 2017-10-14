@@ -14,11 +14,11 @@ public class Collectable : MonoBehaviour
 	public CollectableType type { get; private set;}
 
 	// CLASS FUNCTIONS
-	public void useCollectable(Player whichPlayer)
+	public void useCollectable(PlayerController whichPlayer)
 	{
+		Debug.Log ("useCollectable called");
 		if (type == CollectableType.Reverser)
 		{
-			Debug.Log ("using reverser");
 			if (!whichPlayer.isPredator)
 			{
 				GameManager.instance.swapPredatorPrey ();
@@ -36,9 +36,9 @@ public class Collectable : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
-		if (coll.gameObject.GetComponent<Player>() != null)
+		if (coll.gameObject.GetComponent<PlayerController>() != null)
 		{
-			useCollectable (coll.gameObject.GetComponent<Player>());
+			useCollectable (coll.gameObject.GetComponent<PlayerController>());
 		}
 	}
 }

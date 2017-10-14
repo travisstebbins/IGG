@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player_old : MonoBehaviour
 {
 	// CLASS VARIABLES
 	bool m_isPredator;
@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D coll)
 	{
-		if (isPredator && coll.gameObject.GetComponent<Player>() != null)
+		if (isPredator && coll.gameObject.GetComponent<PlayerController>() != null)
 		{
 			Debug.Log ("predator (player " + playerIndex + ") got prey");
 		}

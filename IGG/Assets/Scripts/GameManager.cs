@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.ComponentModel.Design;
+using UnityEngine.Networking;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
 	// INSTANCE
 	static GameManager m_instance;
@@ -19,8 +21,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	// SERIALIZE FIELD VARIABLES
-	[SerializeField] Player player1;
-	[SerializeField] Player player2;
+	[SerializeField] GameObject collectablePrefab;
 
 	// CLASS VARIABLES
 	int m_predatorIndex;
@@ -37,17 +38,17 @@ public class GameManager : MonoBehaviour
 		private set
 		{
 			m_predatorIndex = value;
-			switch(m_predatorIndex)
-			{
-				case 0:
-					player1.isPredator = true;
-					player2.isPredator = false;
-					break;
-				case 1:
-					player1.isPredator = false;
-					player2.isPredator = true;
-					break;
-			}
+//			switch(m_predatorIndex)
+//			{
+//				case 0:
+//					player1.isPredator = true;
+//					player2.isPredator = false;
+//					break;
+//				case 1:
+//					player1.isPredator = false;
+//					player2.isPredator = true;
+//					break;
+//			}
 		}
 	}
 
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour
 			predatorIndex = 0;
 		}
 	}
+
+
 		
 	// UNITY FUNCTIONS
 	void Awake()
@@ -75,8 +78,22 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		player1.playerIndex = 0;
-		player2.playerIndex = 1;
 		predatorIndex = 0;
+	}
+
+	public void generateCollectable()
+	{
+		if (!isServer)
+		{
+			return;
+		}
+		RpcGenerateCollectable ();
+	}
+
+	[ClientRpc]
+	void RpcGenerateCollectable()
+	{
+		GameObject collectable = Instantiate (collectablePrefab, Vector3.zero, Quaternion.identity);
+		NetworkServer.Spawn (collectable);
 	}
 }

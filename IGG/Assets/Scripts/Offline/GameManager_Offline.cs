@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel.Design;
 using UnityEngine.SceneManagement;
+using System.Net.Configuration;
 
 public class GameManager_Offline : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameManager_Offline : MonoBehaviour
 	[SerializeField] GameObject playerPrefab;
 	[SerializeField] GameObject collectablePrefab;
 	[SerializeField] List<GameObject> modules;
+	[SerializeField] bool rotateModules;
 	[SerializeField] int rows;
 	[SerializeField] int columns;
 	[SerializeField] float timeLimit;
@@ -78,6 +80,39 @@ public class GameManager_Offline : MonoBehaviour
 		}
 	}
 
+	void generateMap()
+	{
+		for (int i = 0; i < rows; ++i)
+		{
+			for (int j = 0; j < columns; ++j)
+			{
+				float rotation = 0;
+				if (rotateModules)
+				{
+					rotation = 90 * UnityEngine.Random.Range (0, 4);
+				}
+				Module_Offline module = Instantiate (modules [UnityEngine.Random.Range (0, modules.Count)], new Vector3(14 * j, 14 * i, 0), Quaternion.Euler(new Vector3(0, 0, rotation))).GetComponent<Module_Offline>();
+				module.gates.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, -rotation));
+				if (i == 0)
+				{
+					module.bottomGateEnabled = true;
+				}
+				else if (i == rows - 1)
+				{
+					module.topGateEnabled = true;
+				}
+				if (j == 0)
+				{
+					module.leftGateEnabled = true;
+				}
+				else if (j == columns - 1)
+				{
+					module.rightGateEnabled = true;
+				}
+			}
+		}
+	}
+
 	public void spawnCollectable()
 	{
 		int i = UnityEngine.Random.Range (0, rows);
@@ -120,13 +155,7 @@ public class GameManager_Offline : MonoBehaviour
 
 	void Start()
 	{
-		for (int i = 0; i < rows; ++i)
-		{
-			for (int j = 0; j < columns; ++j)
-			{
-				Instantiate (modules [UnityEngine.Random.Range (0, modules.Count)], new Vector3(14 * i, 14 * j, 0), Quaternion.identity);
-			}
-		}
+		generateMap ();
 		spawnCollectable ();
 		spawnPlayers ();
 		initializePredator ();

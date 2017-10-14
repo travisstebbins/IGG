@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel.Design;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
@@ -99,6 +100,19 @@ public class GameManager : NetworkBehaviour
 	{
 		players.Clear ();
 	}
+
+	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+	{
+		Debug.Log ("hello!");
+		if (scene.name == "Main")
+		{
+			Debug.Log ("finished loading main");
+			if (isServer)
+			{
+				Debug.Log ("isServer");
+			}
+		}
+	}
 		
 	// UNITY FUNCTIONS
 	public override void OnStartServer()
@@ -122,21 +136,16 @@ public class GameManager : NetworkBehaviour
 		{
 			Destroy (this.gameObject);
 		}
+		DontDestroyOnLoad (this.gameObject);
 	}
 
-	public void generateCollectable()
+	void OnEnable()
 	{
-		if (!isServer)
-		{
-			return;
-		}
-		RpcGenerateCollectable ();
+		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 	}
 
-	[ClientRpc]
-	void RpcGenerateCollectable()
+	void OnDisable()
 	{
-		GameObject collectable = Instantiate (collectablePrefab, Vector3.zero, Quaternion.identity);
-		NetworkServer.Spawn (collectable);
+		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
 	}
 }

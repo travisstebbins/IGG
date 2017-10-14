@@ -9,6 +9,14 @@ public class PlayerController_Offline : MonoBehaviour
 	public int playerIndex;
 	float speed = 5;
 	bool m_isPredator;
+	readonly float minDistance = 5;
+	readonly float maxDistance = 40;
+	readonly float minZ = -0.4f;
+	readonly float maxZ = -0.15f;
+	readonly float minR = 4;
+	readonly float maxR = 15;
+	readonly float minI = 0.8f;
+	readonly float maxI = 1.2f;
 
 	// PROPERTIES
 	public bool isPredator
@@ -38,13 +46,20 @@ public class PlayerController_Offline : MonoBehaviour
 		{
 			transform.Translate (new Vector3 (Input.GetAxis ("Player2Horizontal") * Time.deltaTime * speed, Input.GetAxis ("Player2Vertical") * Time.deltaTime * speed, 0));
 		}
+		Light l = GetComponentInChildren<Light> ();
+		float slope = 1f / (maxDistance - minDistance);
+		float intercept = -slope * minDistance;
+		float t = Mathf.Clamp01(slope * GameManager_Offline.instance.playerDistance () + intercept);
+		l.transform.localPosition = new Vector3 (0, 0, Mathf.Lerp (minZ, maxZ, t));
+		l.range = Mathf.Lerp (minR, maxR, t);
+		l.intensity = Mathf.Lerp (minI, maxI, t);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if (isPredator && coll.gameObject.GetComponent<PlayerController_Offline>() != null && !coll.gameObject.GetComponent<PlayerController_Offline>().isPredator)
 		{
-			Debug.Log ("Predator ate prey!");
+			GameManager_Offline.instance.endGame (playerIndex);
 		}
 	}
 }

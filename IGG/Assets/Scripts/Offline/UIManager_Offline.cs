@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager_Offline : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class UIManager_Offline : MonoBehaviour
 
 	// SERIALIZE FIELD VARIABLES
 	[SerializeField] Text timer;
+	[SerializeField] GameObject endGameScreen;
+	[SerializeField] Text winText;
+	[SerializeField] Text timeText;
 
 	// CLASS FUNCTIONS
 	public void updateTimer(float timeRemaining)
@@ -36,6 +40,30 @@ public class UIManager_Offline : MonoBehaviour
 		{
 			timer.text += seconds;
 		}
+	}
+
+	public void showEndGameScreen(int winningPlayerIndex)
+	{
+		winText.text = "Player " + (winningPlayerIndex + 1) + " Wins!";
+		int minutes = (int)Time.timeSinceLevelLoad / 60;
+		int seconds = (int)((Time.timeSinceLevelLoad - (60 * minutes)) % 60);
+		string formattedTime = minutes + ":";
+		if (seconds < 10)
+		{
+			formattedTime += "0" + seconds;
+		}
+		else
+		{
+			formattedTime += seconds;
+		}
+		timeText.text = formattedTime;
+		endGameScreen.SetActive (true);
+	}
+
+	public void OnQuitButtonClick()
+	{
+		Debug.Log ("quit button clicked");
+		SceneManager.LoadScene ("MainMenu_Offline");
 	}
 
 	// UNITY FUNCTIONS

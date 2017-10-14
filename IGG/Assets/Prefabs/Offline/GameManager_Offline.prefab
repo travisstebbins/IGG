@@ -64,9 +64,9 @@ MonoBehaviour:
   collectablePrefab: {fileID: 1773436048738426, guid: 8d19832a7dae64df8a454e4f987887ce,
     type: 2}
   modules:
-  - {fileID: 1297659083413142, guid: 108016049331846eb81edef9f4306608, type: 2}
-  - {fileID: 1099759973969150, guid: 79898e9660b434538a6837597a980b14, type: 2}
-  - {fileID: 1336723454158952, guid: a58b3d67e62484b12ae18dea4e7e0591, type: 2}
+  - {fileID: 1297659083413142, guid: c26bf7e3115e44f5fa20da36911cd421, type: 2}
+  - {fileID: 1099759973969150, guid: c8ed365dbc6244c3fa6684f72838e079, type: 2}
+  - {fileID: 1336723454158952, guid: e8d63a130f8674024ad6d58c5ee40599, type: 2}
   rows: 5
   columns: 5
   timeLimit: 180

@@ -97,6 +97,17 @@ public class GameManager_Offline : MonoBehaviour
 		player2.playerIndex = 1;
 		player2.GetComponentInChildren<Camera> ().rect = new Rect (0.5f, 0, 0.5f, 1);
 	}
+
+	public void endGame(int winningPlayerIndex)
+	{
+		Time.timeScale = 0;
+		UIManager_Offline.instance.showEndGameScreen (winningPlayerIndex);
+	}
+
+	public float playerDistance()
+	{
+		return Vector3.Distance (player1.transform.position, player2.transform.position);
+	}
 		
 	// UNITY FUNCTIONS
 	void Awake()

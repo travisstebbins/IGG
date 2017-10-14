@@ -64,6 +64,16 @@ public class PlayerController : NetworkBehaviour
 
 	void OnCollisionEnter2D(Collision2D coll)
 	{
-		
+		if (isPredator && !coll.gameObject.GetComponent<PlayerController>().isPredator)
+		{
+			if (isServer)
+			{
+				Debug.Log ("server: predator caught the prey!");
+			}
+			else
+			{
+				Debug.Log ("client: predator caught prey!");
+			}
+		}
 	}
 }

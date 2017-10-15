@@ -34,8 +34,8 @@ public class GameManager_Offline : MonoBehaviour
 
 	// CLASS VARIABLES
 	public readonly int playerLimit = 2;
-	public readonly float predatorSpeed = 5;
-	public readonly float preySpeed = 7;
+	public readonly float predatorSpeed = 50;
+	public readonly float preySpeed = 70;
 	public readonly float predatorAbilityMultiplier = 3;
 	public readonly float predatorAbilityDuration = 0.5f;
 	public readonly float predatorAbilityCooldown = 2;

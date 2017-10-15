@@ -7,7 +7,7 @@ public class PlayerController_Offline : MonoBehaviour
 {
 	// CLASS VARIABLES
 	public int playerIndex;
-	float speed = 1000000;
+	float speed = 5000000;
 	bool m_isPredator;
 	public bool canUseAbility;
 		// variables for calculating light properties
@@ -43,6 +43,7 @@ public class PlayerController_Offline : MonoBehaviour
 		// handle input
 		if (playerIndex == 0)
 		{
+			Debug.Log ("x: " + Input.GetAxis ("Player1Horizontal") + ", y: " + Input.GetAxis ("Player1Vertical"));
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player1Horizontal") * speed, Input.GetAxis ("Player1Vertical") * speed);
 			if (Input.GetAxis("Player1Ability") > 0 && isPredator && canUseAbility)
 			{

@@ -27,7 +27,8 @@ public class UIManager_Offline : MonoBehaviour
 	[SerializeField] Text winText;
 	[SerializeField] Text timeText;
 	[SerializeField] Button resumeButton;
-	[SerializeField] Button quitButton;
+	[SerializeField] Button endGameScreenQuitButton;
+	[SerializeField] Button pauseScreenQuitButton;
 
 	// CLASS VARIABLES
 	public bool isPaused { get; set; }
@@ -64,6 +65,8 @@ public class UIManager_Offline : MonoBehaviour
 		}
 		timeText.text = formattedTime;
 		endGameScreen.SetActive (true);
+		endGameScreenQuitButton.Select ();
+		Time.timeScale = 0;
 	}
 
 	// EVENT HANDLERS

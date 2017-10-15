@@ -164,7 +164,6 @@ public class GameManager_Offline : MonoBehaviour
 
 	public void endGame(int winningPlayerIndex)
 	{
-		Time.timeScale = 0;
 		UIManager_Offline.instance.showEndGameScreen (winningPlayerIndex);
 	}
 

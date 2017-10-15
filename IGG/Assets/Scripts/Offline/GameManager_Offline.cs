@@ -35,7 +35,10 @@ public class GameManager_Offline : MonoBehaviour
 	// CLASS VARIABLES
 	public readonly int playerLimit = 2;
 	public readonly float predatorSpeed = 5;
-	public readonly float preySpeed = 5;
+	public readonly float preySpeed = 7;
+	public readonly float predatorAbilityMultiplier = 3;
+	public readonly float predatorAbilityDuration = 0.5f;
+	public readonly float predatorAbilityCooldown = 2;
 	PlayerController_Offline player1;
 	PlayerController_Offline player2;
 	int m_predatorIndex;
@@ -55,11 +58,15 @@ public class GameManager_Offline : MonoBehaviour
 			{
 				case 0:
 					player1.isPredator = true;
+					player1.canUseAbility = true;
 					player2.isPredator = false;
+					player2.canUseAbility = false;
 					break;
 				case 1:
 					player1.isPredator = false;
+					player1.canUseAbility = false;
 					player2.isPredator = true;
+					player2.canUseAbility = true;
 					break;
 			}
 		}

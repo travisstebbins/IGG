@@ -9,6 +9,8 @@ public class PlayerController_Offline : MonoBehaviour
 	public int playerIndex;
 	float speed = 1000000;
 	bool m_isPredator;
+	public bool canUseAbility;
+		// variables for calculating light properties
 	readonly float minDistance = 5;
 	readonly float maxDistance = 40;
 	readonly float minZ = -0.4f;
@@ -38,14 +40,24 @@ public class PlayerController_Offline : MonoBehaviour
 	// UNITY FUNCTIONS
 	void Update()
 	{
+		// handle input
 		if (playerIndex == 0)
 		{
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player1Horizontal") * speed, Input.GetAxis ("Player1Vertical") * speed);
+			if (Input.GetAxis("Player1Ability") > 0 && isPredator && canUseAbility)
+			{
+				StartCoroutine (useAbility ());
+			}
 		}
 		else
 		{
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player2Horizontal") * speed, Input.GetAxis ("Player2Vertical") * speed);
+			if (Input.GetAxis("Player2Ability") > 0 && isPredator && canUseAbility)
+			{
+				StartCoroutine (useAbility ());
+			}
 		}
+		// adjust light qualities
 		Light l = GetComponentInChildren<Light> ();
 		float slope = 1f / (maxDistance - minDistance);
 		float intercept = -slope * minDistance;
@@ -63,5 +75,18 @@ public class PlayerController_Offline : MonoBehaviour
 		{
 			GameManager_Offline.instance.endGame (playerIndex);
 		}
+	}
+
+	// COROUTINE FUNCTIONS
+	IEnumerator useAbility()
+	{
+		Debug.Log ("player " + (playerIndex + 1) + " used ability");
+		canUseAbility = false;
+		float originalSpeed = speed;
+		speed *= GameManager_Offline.instance.predatorAbilityMultiplier;
+		yield return new WaitForSeconds (GameManager_Offline.instance.predatorAbilityDuration);
+		speed = originalSpeed;
+		yield return new WaitForSeconds (GameManager_Offline.instance.predatorAbilityCooldown);
+		canUseAbility = true;
 	}
 }

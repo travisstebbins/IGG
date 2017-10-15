@@ -62,7 +62,7 @@ public class UIManager_Offline : MonoBehaviour
 
 	public void OnQuitButtonClick()
 	{
-		Debug.Log ("quit button clicked");
+		Time.timeScale = 1;
 		SceneManager.LoadScene ("MainMenu_Offline");
 	}
 

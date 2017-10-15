@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 583, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 97
+  controlID: 98
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 306, y: 342}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
-  controlID: 98
+  controlID: 99
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 306, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 78
+  controlID: 100
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -541,18 +541,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Sprites
+    - Assets/Scripts/Offline
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Sprites
+  - Assets/Scripts/Offline
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/travisstebbins/GitHub/IGG/IGG
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 16}
-    m_SelectedIDs: 30270000
-    m_LastClickedID: 10032
+    m_SelectedIDs: fa270000
+    m_LastClickedID: 10234
     m_ExpandedIDs: 000000001e27000084270000f627000030280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -606,8 +606,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 46010000
-    m_LastClickedInstanceID: 326
+    m_SelectedInstanceIDs: d4050000
+    m_LastClickedInstanceID: 1492
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 00000000602700005c270000a0060000
     m_RenameOverlay:
@@ -688,7 +688,7 @@ MonoBehaviour:
     y: 93
     width: 419
     height: 781
-  m_ScrollPosition: {x: 0, y: 964.9551}
+  m_ScrollPosition: {x: 0, y: 460.95508}
   m_InspectorMode: 0
   m_PreviewResizer:
     m_CachedPref: 160

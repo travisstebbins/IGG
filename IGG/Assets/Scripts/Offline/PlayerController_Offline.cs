@@ -43,7 +43,6 @@ public class PlayerController_Offline : MonoBehaviour
 		// handle input
 		if (playerIndex == 0)
 		{
-			Debug.Log ("x: " + Input.GetAxis ("Player1Horizontal") + ", y: " + Input.GetAxis ("Player1Vertical"));
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player1Horizontal") * speed, Input.GetAxis ("Player1Vertical") * speed);
 			if (Input.GetAxis("Player1Ability") > 0 && isPredator && canUseAbility)
 			{

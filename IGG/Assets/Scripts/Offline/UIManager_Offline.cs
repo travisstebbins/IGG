@@ -80,6 +80,7 @@ public class UIManager_Offline : MonoBehaviour
 		pauseScreen.SetActive (false);
 		Time.timeScale = 1;
 		isPaused = false;
+		GameManager_Offline.instance.isPaused = false;
 	}
 
 	public void OnQuitButtonClick()

@@ -46,7 +46,7 @@ public class PlayerController_Offline : MonoBehaviour
 		{
 			checkPause ();
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player1Horizontal") * speed, Input.GetAxis ("Player1Vertical") * speed);
-			if (Input.GetAxis("Player1Ability") != 0 && isPredator && canUseAbility)
+			if (Input.GetAxis("Player1Ability") != 0 && isPredator && canUseAbility && !GameManager_Offline.instance.isPaused)
 			{
 				StartCoroutine (useAbility ());
 			}
@@ -54,7 +54,7 @@ public class PlayerController_Offline : MonoBehaviour
 		else
 		{
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player2Horizontal") * speed, Input.GetAxis ("Player2Vertical") * speed);
-			if (Input.GetAxis("Player2Ability") != 0 && isPredator && canUseAbility)
+			if (Input.GetAxis("Player2Ability") != 0 && isPredator && canUseAbility && !GameManager_Offline.instance.isPaused)
 			{
 				StartCoroutine (useAbility ());
 			}

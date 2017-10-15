@@ -44,7 +44,7 @@ public class GameManager_Offline : MonoBehaviour
 	int m_predatorIndex;
 	Collectable_Offline collectable;
 	float timeRemaining;
-	bool isPaused;
+	public bool isPaused { get; set; }
 
 	public int predatorIndex
 	{

@@ -22,9 +22,15 @@ public class UIManager_Offline : MonoBehaviour
 
 	// SERIALIZE FIELD VARIABLES
 	[SerializeField] Text timer;
+	[SerializeField] GameObject pauseScreen;
 	[SerializeField] GameObject endGameScreen;
 	[SerializeField] Text winText;
 	[SerializeField] Text timeText;
+	[SerializeField] Button resumeButton;
+	[SerializeField] Button quitButton;
+
+	// CLASS VARIABLES
+	public bool isPaused { get; set; }
 
 	// CLASS FUNCTIONS
 	public void updateTimer(float timeRemaining)
@@ -60,6 +66,22 @@ public class UIManager_Offline : MonoBehaviour
 		endGameScreen.SetActive (true);
 	}
 
+	// EVENT HANDLERS
+	public void showPauseScreen()
+	{
+		pauseScreen.SetActive (true);
+		resumeButton.Select ();
+		Time.timeScale = 0;
+		isPaused = true;
+	}
+
+	public void OnResumeButtonClick()
+	{
+		pauseScreen.SetActive (false);
+		Time.timeScale = 1;
+		isPaused = false;
+	}
+
 	public void OnQuitButtonClick()
 	{
 		Time.timeScale = 1;
@@ -73,5 +95,10 @@ public class UIManager_Offline : MonoBehaviour
 		{
 			Destroy (this.gameObject);
 		}
+	}
+
+	void Start()
+	{
+		isPaused = false;
 	}
 }

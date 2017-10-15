@@ -10,6 +10,7 @@ public class PlayerController_Offline : MonoBehaviour
 	float speed = 5000000;
 	bool m_isPredator;
 	public bool canUseAbility;
+	bool pausePressed;
 		// variables for calculating light properties
 	readonly float minDistance = 5;
 	readonly float maxDistance = 40;
@@ -43,8 +44,9 @@ public class PlayerController_Offline : MonoBehaviour
 		// handle input
 		if (playerIndex == 0)
 		{
+			checkPause ();
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player1Horizontal") * speed, Input.GetAxis ("Player1Vertical") * speed);
-			if (Input.GetAxis("Player1Ability") > 0 && isPredator && canUseAbility)
+			if (Input.GetAxis("Player1Ability") != 0 && isPredator && canUseAbility)
 			{
 				StartCoroutine (useAbility ());
 			}
@@ -52,7 +54,7 @@ public class PlayerController_Offline : MonoBehaviour
 		else
 		{
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (Input.GetAxis ("Player2Horizontal") * speed, Input.GetAxis ("Player2Vertical") * speed);
-			if (Input.GetAxis("Player2Ability") > 0 && isPredator && canUseAbility)
+			if (Input.GetAxis("Player2Ability") != 0 && isPredator && canUseAbility)
 			{
 				StartCoroutine (useAbility ());
 			}
@@ -67,6 +69,19 @@ public class PlayerController_Offline : MonoBehaviour
 		l.intensity = Mathf.Lerp (minI, maxI, t);
 		t = Mathf.Clamp01 (slope * GameManager_Offline.instance.collectableDistance (transform.position) + intercept);
 		l.color = Color.Lerp (new Color(0.7f, 0.7f, 1), Color.yellow, t);
+	}
+
+	void checkPause()
+	{
+		if (Input.GetAxisRaw("Pause") != 0 && !pausePressed)
+		{
+			GameManager_Offline.instance.togglePause ();
+			pausePressed = true;
+		}
+		if (Input.GetAxisRaw("Pause") == 0 && pausePressed)
+		{
+			pausePressed = false;
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)

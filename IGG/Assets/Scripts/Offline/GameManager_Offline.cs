@@ -44,6 +44,7 @@ public class GameManager_Offline : MonoBehaviour
 	int m_predatorIndex;
 	Collectable_Offline collectable;
 	float timeRemaining;
+	bool isPaused;
 
 	public int predatorIndex
 	{
@@ -175,6 +176,18 @@ public class GameManager_Offline : MonoBehaviour
 	public float collectableDistance(Vector3 point)
 	{
 		return Vector3.Distance (point, collectable.transform.position);
+	}
+
+	public void togglePause () {
+		if (UIManager_Offline.instance.isPaused) {
+			UIManager_Offline.instance.OnResumeButtonClick ();
+			isPaused = false;
+		}
+		else
+		{
+			UIManager_Offline.instance.showPauseScreen ();
+			isPaused = true;
+		}
 	}
 		
 	// UNITY FUNCTIONS

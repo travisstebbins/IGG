@@ -14,12 +14,12 @@ public class PlayerController_Offline : MonoBehaviour
 		// variables for calculating light properties
 	readonly float minDistance = 5;
 	readonly float maxDistance = 40;
-	readonly float minZ = -0.4f;
-	readonly float maxZ = -0.15f;
-	readonly float minR = 4;
-	readonly float maxR = 15;
+	readonly float minZ = -0.2f;
+	readonly float maxZ = -1f;
+	readonly float minR = 5;
+	readonly float maxR = 25;
 	readonly float minI = 0.8f;
-	readonly float maxI = 1.2f;
+	readonly float maxI = 1.5f;
 
 	// PROPERTIES
 	public bool isPredator

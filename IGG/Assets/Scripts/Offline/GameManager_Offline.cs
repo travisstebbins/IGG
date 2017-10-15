@@ -215,5 +215,13 @@ public class GameManager_Offline : MonoBehaviour
 			UIManager_Offline.instance.updateTimer (timeRemaining);
 			yield return new WaitForSeconds(1);
 		} while (timeRemaining > 0);
+		if (predatorIndex == 0)
+		{
+			endGame (1);
+		}
+		else
+		{
+			endGame (0);
+		}
 	}
 }
